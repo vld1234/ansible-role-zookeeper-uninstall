@@ -1,0 +1,3 @@
+---
+# vars file for zookeeper
+zk_uninstall_type: '{{ zk_tarball_installation | ternary("tarball_uninstall", "package_uninstall") }}'

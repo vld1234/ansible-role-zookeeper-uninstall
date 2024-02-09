@@ -1,0 +1,26 @@
+---
+- name: Load variables
+  include_vars: '{{ ansible_os_family }}.yml'
+
+- block:
+
+    - name: Uninstall packages
+      package:
+        name: '{{ zk_packages }}'
+        state: absent
+      register: removed_packages
+      until: removed_packages is succeeded
+
+    - name: Remove zookeeper config files and folders
+      file:
+        path: '{{ zookeeper_conf_files }}'
+        state: absent
+      loop:
+        - '/lib/systemd/system/{{ zk_service_name }}.service'
+        - '{{ zk_package_config_dir }}'
+        - '{{ zk_package_myid_dir }}'
+        - '{{ zk_dir }}'
+      loop_control:
+        loop_var: zookeeper_conf_files
+
+  become: True

@@ -1,0 +1,14 @@
+---
+zk_version: 3.6.2
+
+zk_service_name: zookeeper
+
+zk_tarball_installation: True
+
+zk_user: zookeeper
+zk_group: zookeeper
+zk_data_dir: /var/lib/zookeeper
+zk_log_dir: /var/log/zookeeper
+zk_dir: '{{ zk_tarball_installation | ternary("/opt/zookeeper-" + zk_version, "/usr/lib/zookeeper") }}'
+
+zk_remove_user: False

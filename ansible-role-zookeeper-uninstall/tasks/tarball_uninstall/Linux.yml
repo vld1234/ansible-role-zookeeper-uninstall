@@ -1,0 +1,30 @@
+---
+- block:
+
+    - name: Remove zookeeper config files and folders
+      file:
+        path: '{{ zookeeper_conf_files }}'
+        state: absent
+      loop:
+        - '/lib/systemd/system/{{ zk_service_name }}.service'
+        - '{{ zk_data_dir }}'
+        - '{{ zk_log_dir }}'
+        - '{{ zk_dir }}'
+      loop_control:
+        loop_var: zookeeper_conf_files
+
+    - name: Delete zookeeper user
+      user:
+        name: '{{ zk_user }}'
+        state: absent
+        remove: True
+        force: True
+      when: zk_remove_user
+
+    - name: Delete zookeeper group
+      group:
+        name: '{{ zk_group }}'
+        state: absent
+      when: zk_remove_user
+
+  become: True

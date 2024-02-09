@@ -1,0 +1,5 @@
+---
+zk_packages:
+  - zookeeper
+zk_package_config_dir: '{{ zk_dir }}/conf'
+zk_package_myid_dir: '{{ zk_data_dir }}'
